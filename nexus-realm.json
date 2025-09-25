@@ -1,0 +1,146 @@
+{
+  "realm": "nexus-dev",
+  "displayName": "Nexus Development Environment",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "rememberMe": true,
+  "verifyEmail": false,
+  "loginTheme": "base",
+  "accessTokenLifespan": 1800,
+  "refreshTokenMaxReuse": 0,
+  "offlineSessionMaxLifespan": 5184000,
+  "bruteForceProtected": true,
+  "failureFactor": 5,
+  "waitIncrementSeconds": 60,
+  "maxFailureWaitSeconds": 900,
+  "roles": {
+    "realm": [
+      {
+        "name": "nexus-admin",
+        "description": "Full administrative access to Nexus system"
+      },
+      {
+        "name": "nexus-manager",
+        "description": "Management level access with user administration"
+      },
+      {
+        "name": "nexus-user",
+        "description": "Standard user access to Nexus application"
+      },
+      {
+        "name": "nexus-viewer",
+        "description": "Read-only access to Nexus system"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "nexus-web-app",
+      "name": "Nexus Web Application",
+      "description": "React frontend for Nexus application",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://localhost:3000/*",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "oidc.ciba.grant.enabled": "false"
+      },
+      "redirectUris": [
+        "http://localhost:3000/*",
+        "http://localhost:3001/*"
+      ],
+      "webOrigins": [
+        "http://localhost:3000",
+        "http://localhost:3001"
+      ],
+      "defaultClientScopes": [
+        "web-origins",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access"
+      ]
+    },
+    {
+      "clientId": "nexus-api",
+      "name": "Nexus API Server",
+      "description": "Spring Boot backend API server",
+      "enabled": true,
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "protocol": "openid-connect",
+      "bearerOnly": true,
+      "attributes": {
+        "access.token.lifespan": "1800",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "oidc.ciba.grant.enabled": "false"
+      },
+      "defaultClientScopes": [
+        "profile",
+        "roles",
+        "email"
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "nexus-user",
+      "email": "user@nexus.systech.com",
+      "firstName": "Nexus",
+      "lastName": "User",
+      "enabled": true,
+      "emailVerified": true,
+      "attributes": {
+        "employee_id": ["EMP001"],
+        "department": ["Engineering"],
+        "location": ["Bangalore"]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "nexus123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["nexus-user"]
+    },
+    {
+      "username": "nexus-admin",
+      "email": "admin@nexus.systech.com",
+      "firstName": "Nexus",
+      "lastName": "Administrator",
+      "enabled": true,
+      "emailVerified": true,
+      "attributes": {
+        "employee_id": ["ADM001"],
+        "department": ["IT"],
+        "location": ["Bangalore"]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["nexus-admin", "nexus-user"]
+    }
+  ]
+}

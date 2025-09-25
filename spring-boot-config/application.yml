@@ -1,0 +1,40 @@
+# Spring Boot Configuration for Nexus Keycloak Integration
+# Single Client Architecture (nexus-web-app only)
+
+spring:
+  application:
+    name: nexus-api
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Keycloak will provide public keys for JWT validation
+          issuer-uri: http://localhost:8090/realms/nexus-dev
+          # Optional: Explicit JWK Set URI (auto-discovered from issuer-uri)
+          # jwk-set-uri: http://localhost:8090/realms/nexus-dev/protocol/openid-connect/certs
+
+# CORS Configuration for React Frontend
+nexus:
+  security:
+    cors:
+      allowed-origins:
+        - http://localhost:3000
+        - http://localhost:3001
+      allowed-methods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+        - OPTIONS
+      allowed-headers:
+        - Authorization
+        - Content-Type
+        - X-Requested-With
+      max-age: 3600
+
+# Development Logging (optional)
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
