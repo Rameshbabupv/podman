@@ -3,7 +3,7 @@
 # Keycloak Development Setup Script
 # This script starts Keycloak in development mode using Podman
 # Port: 8090 (to avoid conflict with Spring Boot on 8080)
-# Database: Internal H2 (development mode)
+# Database: Persistent H2 (development mode with volume storage)
 # Runs in background (detached) mode
 
 # Load environment variables
@@ -77,10 +77,14 @@ echo "👤 Admin User: admin"
 echo "🔑 Admin Password: ${ADMIN_PASSWORD}"
 echo ""
 
-# Start Keycloak in detached mode
+# Create persistent volume for Keycloak data
+podman volume create keycloak-data 2>/dev/null || true
+
+# Start Keycloak in detached mode with persistent storage
 podman run -d \
   --name ${CONTAINER_NAME} \
   -p ${PORT}:8080 \
+  -v keycloak-data:/opt/keycloak/data \
   -e KEYCLOAK_ADMIN=admin \
   -e KEYCLOAK_ADMIN_PASSWORD=${ADMIN_PASSWORD} \
   ${IMAGE} \
