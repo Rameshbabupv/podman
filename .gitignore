@@ -98,6 +98,13 @@ Thumbs.db
 *.backup
 *~
 
+# Keycloak realm backups (contain sensitive data)
+*realm-backup*.json
+*realm-backup*.txt
+systech-backup-*/
+*-complete-backup-*.json
+*-complete-backup-*.txt
+
 # Local development files
 local/
 dev-local/.env
